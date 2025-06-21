@@ -28,6 +28,6 @@
 
 - Every story includes a moral lesson that promotes positive values.
 
-**5.** **New Adventures**: After reading, you can click "Tell Another Story" to start fresh and create a brand new adventure!
+**5.** _**New Adventures**_: After reading, you can click "Tell Another Story" to start fresh and create a brand new adventure!
 
 This project aims to combine the magic of personalized storytelling with the creative capabilities of AI to make bedtime a special time.
