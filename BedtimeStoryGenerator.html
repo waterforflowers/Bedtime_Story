@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bedtime Storyteller</title>
+    <!-- Tailwind CSS CDN for easy styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scrollbar for better aesthetics */
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #3f3e80; /* Darker indigo for track */
+          border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #8b5cf6; /* Purple-500 for thumb */
+          border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #a78bfa; /* Lighter purple on hover */
+        }
+
+        /* Basic animations */
+        @keyframes bounce-in {
+          0% {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          60% {
+            opacity: 1;
+            transform: translateY(5px);
+          }
+          100% {
+            transform: translateY(0);
+          }
+        }
+
+        .animate-bounce-in {
+          animation: bounce-in 0.8s ease-out forwards;
+        }
+
+        @keyframes fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-in forwards;
+        }
+
+        @keyframes fade-in-up {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in-up {
+          animation: fade-in-up 0.6s ease-out forwards;
+        }
+
+        /* Utility classes for step visibility */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col items-center justify-center p-4 font-sans text-white">
+
+    <!-- Background Image Layer -->
+    <div
+      class="absolute inset-0 bg-cover bg-center bg-fixed"
+      style="background-image: url('https://i.imgur.com/k7PKD3P.png');"
+    ></div>
+
+    <!-- Content Layer with Overlay for Readability -->
+    <div class="relative z-10 w-full max-w-2xl rounded-3xl p-8 transform transition-all duration-500 ease-in-out scale-100 hover:scale-105">
+        <h1 class="text-5xl font-extrabold text-center mb-8 text-yellow-300 drop-shadow-lg">
+            BEDTIME STORYTELLER
+        </h1>
+
+        <div id="message-container" class="bg-red-600 bg-opacity-80 text-white p-3 rounded-lg mb-6 text-center text-lg animate-fade-in hidden"></div>
+
+        <!-- Step: Start -->
+        <div id="step-start" class="flex flex-col items-center">
+            <button
+              id="start-button"
+              class="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-110 active:scale-95"
+            >
+              Start Adventure!
+            </button>
+        </div>
+
+        <!-- Step: Name -->
+        <div id="step-name" class="flex-col items-center hidden">
+            <label for="adventurerName" class="text-2xl font-semibold mb-4 text-purple-200">
+              The name of the adventurer:
+            </label>
+            <input
+              type="text"
+              id="adventurerNameInput"
+              class="w-full max-w-sm p-3 rounded-lg bg-indigo-700 border border-indigo-500 text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-center text-xl transition duration-200 ease-in-out"
+              placeholder="e.g., Lily or Tom"
+              required
+            />
+            <button
+              id="name-submit-button"
+              class="mt-6 bg-gradient-to-r from-orange-400 to-pink-500 hover:from-orange-500 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+            >
+              Next
+            </button>
+        </div>
+
+        <!-- Step: Color -->
+        <div id="step-color" class="flex-col items-center hidden">
+            <label id="favoriteColorLabel" for="favoriteColorInput" class="text-2xl font-semibold mb-4 text-purple-200 text-center">
+              Adventurer's Favorite Color:
+            </label>
+            <input
+              type="text"
+              id="favoriteColorInput"
+              class="w-full max-w-sm p-3 rounded-lg bg-indigo-700 border border-indigo-500 text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-center text-xl transition duration-200 ease-in-out"
+              placeholder="e.g., Blue"
+              required
+            />
+            <button
+              id="color-submit-button"
+              class="mt-6 bg-gradient-to-r from-orange-400 to-pink-500 hover:from-orange-500 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+            >
+              Next
+            </button>
+        </div>
+
+        <!-- Step: Buddy -->
+        <div id="step-buddy" class="flex-col items-center hidden">
+            <p id="buddyPrompt" class="text-2xl font-semibold mb-4 text-purple-200 text-center">
+              Pick a buddy for the adventurer:
+            </p>
+            <div id="buddy-buttons-container" class="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full max-w-lg">
+                <!-- Buddy buttons will be injected here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Step: Ready -->
+        <div id="step-ready" class="flex-col items-center hidden">
+            <p id="readyPrompt" class="text-3xl font-bold mb-8 text-teal-300 animate-fade-in-up text-center">
+              Are you ready for your adventure, <span id="adventurerNameDisplay"></span>?
+            </p>
+            <button
+              id="ready-button"
+              class="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-110 active:scale-95"
+            >
+              Let's Go!
+            </button>
+        </div>
+
+        <!-- Step: Story -->
+        <div id="step-story" class="flex-col items-center hidden">
+            <h2 class="text-3xl font-bold mb-6 text-yellow-300">Your Bedtime Story!</h2>
+            <div id="generated-story-content" class="bg-indigo-700 bg-opacity-60 p-6 rounded-xl shadow-inner border border-indigo-500 mb-8 text-lg text-left leading-relaxed max-h-96 overflow-y-auto custom-scrollbar">
+                <!-- Story text will be injected here by JavaScript -->
+            </div>
+            <button
+              id="reset-button"
+              class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+            >
+              Tell Another Story
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // State variables
+        let currentStep = 'start';
+        let adventurerName = '';
+        let favoriteColor = '';
+        let buddyAnimal = '';
+        let generatedStory = '';
+        let isLoading = false;
+
+        const buddyAnimals = ['Lion', 'Owl', 'Dolphin', 'Monkey', 'Rabbit', 'Elephant', 'Fox', 'Penguin', 'Pig'];
+
+        // DOM Elements
+        const messageContainer = document.getElementById('message-container');
+        const startButton = document.getElementById('start-button');
+        const nameInput = document.getElementById('adventurerNameInput');
+        const nameSubmitButton = document.getElementById('name-submit-button');
+        const colorInput = document.getElementById('favoriteColorInput');
+        const colorSubmitButton = document.getElementById('color-submit-button');
+        const favoriteColorLabel = document.getElementById('favoriteColorLabel');
+        const buddyButtonsContainer = document.getElementById('buddy-buttons-container');
+        const buddyPrompt = document.getElementById('buddyPrompt');
+        const readyButton = document.getElementById('ready-button');
+        const readyPrompt = document.getElementById('readyPrompt');
+        const adventurerNameDisplay = document.getElementById('adventurerNameDisplay'); // New element to display name
+        const generatedStoryContent = document.getElementById('generated-story-content');
+        const resetButton = document.getElementById('reset-button');
+
+        // Step containers
+        const stepStart = document.getElementById('step-start');
+        const stepName = document.getElementById('step-name');
+        const stepColor = document.getElementById('step-color');
+        const stepBuddy = document.getElementById('step-buddy');
+        const stepReady = document.getElementById('step-ready');
+        const stepStory = document.getElementById('step-story');
+
+        // --- Helper Functions ---
+
+        function showMessage(msg, isError = false) {
+            messageContainer.textContent = msg;
+            messageContainer.classList.remove('hidden', 'bg-red-600', 'bg-blue-600');
+            messageContainer.classList.add(isError ? 'bg-red-600' : 'bg-blue-600', 'flex'); // Ensure it's shown
+        }
+
+        function hideMessage() {
+            messageContainer.classList.add('hidden');
+        }
+
+        function updateUI() {
+            // Hide all steps first
+            stepStart.classList.add('hidden');
+            stepName.classList.add('hidden');
+            stepColor.classList.add('hidden');
+            stepBuddy.classList.add('hidden');
+            stepReady.classList.add('hidden');
+            stepStory.classList.add('hidden');
+
+            // Show the current step
+            switch (currentStep) {
+                case 'start':
+                    stepStart.classList.remove('hidden');
+                    break;
+                case 'name':
+                    stepName.classList.remove('hidden');
+                    stepName.style.display = 'flex'; // Ensure flex layout
+                    break;
+                case 'color':
+                    stepColor.classList.remove('hidden');
+                    stepColor.style.display = 'flex'; // Ensure flex layout
+                    favoriteColorLabel.textContent = `${adventurerName}'s Favorite Color:`;
+                    break;
+                case 'buddy':
+                    stepBuddy.classList.remove('hidden');
+                    stepBuddy.style.display = 'flex'; // Ensure flex layout
+                    buddyPrompt.textContent = `Pick a buddy for ${adventurerName}:`;
+                    renderBuddyButtons();
+                    break;
+                case 'ready':
+                    stepReady.classList.remove('hidden');
+                    stepReady.style.display = 'flex'; // Ensure flex layout
+                    readyPrompt.textContent = `Are you ready for your adventure, ${adventurerName}?`;
+                    adventurerNameDisplay.textContent = adventurerName; // Set the name
+                    readyButton.disabled = isLoading;
+                    readyButton.textContent = isLoading ? 'Creating Story...' : 'Let\'s Go!';
+                    break;
+                case 'story':
+                    stepStory.classList.remove('hidden');
+                    stepStory.style.display = 'flex'; // Ensure flex layout
+                    generatedStoryContent.innerHTML = generatedStory.split('\n').map(line => `<p class="mb-2">${line}</p>`).join('');
+                    break;
+            }
+        }
+
+        function renderBuddyButtons() {
+            buddyButtonsContainer.innerHTML = ''; // Clear previous buttons
+            buddyAnimals.forEach(animal => {
+                const button = document.createElement('button');
+                button.textContent = animal;
+                button.className = "bg-indigo-700 hover:bg-indigo-600 text-white py-3 px-4 rounded-xl shadow-md transition duration-200 ease-in-out transform hover:scale-105 active:scale-95 text-lg font-medium border border-indigo-500";
+                button.onclick = () => handleBuddySelect(animal);
+                buddyButtonsContainer.appendChild(button);
+            });
+        }
+
+        // --- Event Handlers ---
+
+        const handleStartJourney = () => {
+            currentStep = 'name';
+            hideMessage();
+            updateUI();
+        };
+
+        const handleNameSubmit = (event) => {
+            event.preventDefault();
+            adventurerName = nameInput.value.trim();
+            if (adventurerName) {
+                currentStep = 'color';
+                hideMessage();
+            } else {
+                showMessage('Please enter the adventurer\'s name!', true);
+            }
+            updateUI();
+        };
+
+        const handleColorSubmit = (event) => {
+            event.preventDefault();
+            favoriteColor = colorInput.value.trim();
+            if (favoriteColor) {
+                currentStep = 'buddy';
+                hideMessage();
+            } else {
+                showMessage('Please enter a favorite color!', true);
+            }
+            updateUI();
+        };
+
+        const handleBuddySelect = (animal) => {
+            buddyAnimal = animal;
+            currentStep = 'ready';
+            hideMessage();
+            updateUI();
+        };
+
+        const handleReadyForAdventure = async () => {
+            isLoading = true;
+            readyButton.disabled = true; // Disable button while loading
+            readyButton.textContent = 'Creating Story...';
+            hideMessage();
+            updateUI(); // Update UI to show loading state
+
+            const prompt = `Generate a short, adventurous bedtime story for kids.
+                The main character's name is "${adventurerName}".
+                Their traveling companion is a "${buddyAnimal}".
+                Their favorite color, "${favoriteColor}", should be incorporated into the story in a natural and interesting way.
+                The story should have a clear beginning, middle, and end.
+                Include a simple obstacle or challenge that the adventurer and their buddy need to overcome.
+                Use small, easy-to-understand words suitable for young children (ages 4-8).
+                The story must include a simple moral lesson that kids can learn from, stated clearly at the end or subtly woven throughout.
+                Make sure the adventure is exciting but not scary.`;
+
+            const payload = {
+                contents: [{ role: "user", parts: [{ text: prompt }] }],
+                generationConfig: {
+                    temperature: 0.7,
+                    maxOutputTokens: 4096, // Increased to 4096 tokens
+                },
+            };
+
+            const apiKey = ""; // Canvas will provide this automatically for gemini-2.0-flash
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                console.log("Gemini API Response:", result);
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    generatedStory = result.candidates[0].content.parts[0].text;
+                    currentStep = 'story';
+                } else {
+                    showMessage('Oops! I could not generate a story. Please try again.', true);
+                    console.error("AI generation failed or response unexpected:", result);
+                    currentStep = 'ready'; // Stay on ready step to retry
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                showMessage('There was an error generating your story. Please check your internet connection and try again.', true);
+                currentStep = 'ready'; // Stay on ready step to retry
+            } finally {
+                isLoading = false;
+                updateUI(); // Update UI after loading
+            }
+        };
+
+        const handleReset = () => {
+            currentStep = 'start';
+            adventurerName = '';
+            favoriteColor = '';
+            buddyAnimal = '';
+            generatedStory = '';
+            isLoading = false;
+            hideMessage();
+            // Clear input fields
+            nameInput.value = '';
+            colorInput.value = '';
+            updateUI();
+        };
+
+        // --- Initial Setup & Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Attach event listeners
+            startButton.addEventListener('click', handleStartJourney);
+            nameSubmitButton.addEventListener('click', handleNameSubmit);
+            colorSubmitButton.addEventListener('click', handleColorSubmit);
+            readyButton.addEventListener('click', handleReadyForAdventure);
+            resetButton.addEventListener('click', handleReset);
+
+            // Initial UI render
+            updateUI();
+        });
+    </script>
+</body>
+</html>
