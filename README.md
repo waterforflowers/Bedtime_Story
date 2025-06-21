@@ -4,9 +4,9 @@
 
 **How it Works:**
 
-**1** _**Start Your Journey**_: Click the "Start Adventure!" button to begin the story creation process.
+**1.** _**Start Your Journey**_: Click the "Start Adventure!" button to begin the story creation process.
 
-**2** _**Adventurer's Details**_: You'll be prompted to enter:
+**2.** _**Adventurer's Details**_: You'll be prompted to enter:
 
 - The name of the main character (your child's name, or any name they choose!).
 
@@ -14,9 +14,9 @@
 
 - A friendly animal buddy for their adventure from a list of choices.
 
-**3** _**Generate the Story**_: Once all details are provided, the application uses Artificial Intelligence to craft a unique, short, and adventurous bedtime story.
+**3.** _**Generate the Story**_: Once all details are provided, the application uses Artificial Intelligence to craft a unique, short, and adventurous bedtime story.
 
-**4** _**Key Features of the Story**_:
+**4.** _**Key Features of the Story**_:
 
 - The story features the adventurer's name as the hero and their chosen animal as a traveling companion.
 
@@ -28,6 +28,6 @@
 
 - Every story includes a moral lesson that promotes positive values.
 
-**5** **New Adventures**: After reading, you can click "Tell Another Story" to start fresh and create a brand new adventure!
+**5.** **New Adventures**: After reading, you can click "Tell Another Story" to start fresh and create a brand new adventure!
 
 This project aims to combine the magic of personalized storytelling with the creative capabilities of AI to make bedtime a special time.
