@@ -73,3 +73,13 @@ python app.py
 - You should see output similar to * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit). This indicates the backend server is running and ready to receive requests. Keep this terminal window open.
 
 - Once the backend is running, you can open your frontend HTML file in a web browser, and it will communicate with this Python server to generate stories.
+
+**⚙️ Why it works this way ⚙️**
+
+- API Key Security: Crucially, it keeps your Gemini API key hidden on the server, preventing exposure in the frontend.
+  
+- Backend Logic & Control: It centralizes logic like validating user inputs and constructing the detailed AI prompt, ensuring data integrity before interacting with the Gemini API.
+  
+- Cross-Origin Communication: As a backend, it acts as a necessary intermediary to handle requests from your frontend (Canvas) due to browser security policies (CORS).
+  
+- Maintainability: This separation allows for cleaner development, testing, and easier updates to either the frontend or backend independently.
