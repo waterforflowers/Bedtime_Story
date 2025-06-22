@@ -74,7 +74,7 @@ python app.py
 
 - Once the backend is running, you can open your frontend HTML file in a web browser, and it will communicate with this Python server to generate stories.
 
-**⚙️ Why it works this way ⚙️**
+**🪛 Why it works this way 🪛**
 
 - API Key Security: Crucially, it keeps your Gemini API key hidden on the server, preventing exposure in the frontend.
   
