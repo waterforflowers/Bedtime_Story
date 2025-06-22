@@ -4,7 +4,7 @@
 
 **Key Components & Logic:**
 
-1. generate_bedtime_story(adventurer_name, adventurer_sub_name, favorite_color, buddy_animal) Function:
+**1.** generate_bedtime_story(adventurer_name, adventurer_sub_name, favorite_color, buddy_animal) Function:
 
 - Purpose: The core logic for AI interaction. It constructs a detailed prompt using the provided user inputs (adventurer's name, sub-name, favorite color, and animal buddy).
 
@@ -14,7 +14,7 @@
 
 - Returns: A dictionary containing the generated story text (e.g., {"story": "Once upon a time..."}) and a 200 HTTP status code on success. On failure, it returns an error dictionary (e.g., {"error": "message"}) and an appropriate HTTP status code (e.g., 400 for bad input, 500 for server errors).
 
-2. /generate_story Flask Route (@app.route('/generate_story', methods=['POST'])):
+**2.** /generate_story Flask Route (@app.route('/generate_story', methods=['POST'])):
 
 - Purpose: This is the API endpoint that your web frontend calls.
 
