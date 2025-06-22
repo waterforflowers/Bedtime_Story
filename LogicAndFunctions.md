@@ -1,8 +1,8 @@
-**Bedtime Storyteller Backend (Python Flask)**
+**💤 Bedtime Storyteller Backend (Python Flask) 💤**
 
 - This is the Python Flask backend for the "Bedtime Storyteller" web application. It acts as an API server responsible for generating personalized bedtime stories using the Google Gemini AI model. The frontend (HTML/CSS/JavaScript) communicates with this backend to get the stories.
 
-**Key Components & Logic:**
+**🔑 Key Components & Logic 🔑:**
 
 **1.** generate_bedtime_story(adventurer_name, adventurer_sub_name, favorite_color, buddy_animal) Function:
 
@@ -26,7 +26,7 @@
 
 - CORS: flask_cors is enabled to allow cross-origin requests from your frontend for local development.
 
-**Setup and Running the Backend:**
+**⚙️ Setup and Running the Backend ⚙️:**
 
 To run this backend, you need Python installed and your Gemini API Key.
 
